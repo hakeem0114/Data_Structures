@@ -2,51 +2,60 @@ console.log("Circular Queue = Queue with fixed size")
 
 class CircularQueue{
     constructor(capacity){
+        //capcity
+        this.capacity = capacity
+        this.circularQueueItems = new Array(capacity) //Creates an array of length of capacity
 
-        //Setup Queue & Space
-        this.circularQueueItems = new Array(capacity) //Array for queue with fixed size
-        this.capacity = capacity //Instantiate the capacity paramater = Max Size
-
-
-        //Pointers
-        this.currentLength  = 0; //Curent length of queue
-
-        this.head = -1; //Use negative 1 to exclude them from circular queue till an element is added ++
-        this.tail = -1;
+        //Pointers: Becomes an index of 0-> capacity when an element is enQueued
+        this.currentLength = 0
+        this.head = -1 
+        this.tail = -1 
     }
 
     enQueue(element){
-        
-        if(!this.isFull){ //If the Circular Queue is not full,
+        if (!this.isFull()){ //If circular queue is NOT full, add an element to TAIL of queue
 
-            this.circularQueueItems[this.tail] = element  //Avoid using push & shift to maintain a O(1)
+            this.tail = (this.tail +1) % this.capacity 
+            // Remainder of (0+1)/ 5 = 1/5. 5*0 +1. So remainder = 1 
+            // Remainder of (1+1)/5 = 2/5 = 5*0 + 2 = remainder of 2
+            // Remainder of (1+4)/5 = 5/5 = is divisible by 5 = remainder of 0 (Start of circular queue)
 
- 
-            //Increment pointer to place next element behind the current element in the queue
-            // Make the tail increment a remainder of the capacity so it does not exceed its max capacity
-            this.tail = (this.tail+1) % this.capacity  //5%5 = points back to index[0]
+            this.circularQueueItems[this.tail] = element //Insert element in queue index[0]
 
-            this.currentLength++//Add # to circular queue
+            this.currentLength++ 
         }
+
+        //Once an element is inserted, make the head pointer also point to the tail
+        //Necessary to point the deQueue to index[0]
+        if(this.head == -1){ 
+            this.head = this.tail
+        }
+        
     }
 
     deQueue(){
-        if(this.isEmpty){ //If the Circular Queue is not full,
+        if (!this.isEmpty()){ 
+        //If circular queue is NOT empty, you can remove an element at HEAD of queue
 
-            delete this.circularQueueItems[this.head] //First in, first out
+            
+            delete this.circularQueueItems[this.head] //Since this.head was pointing to index[0] after enQueuing, delete first
+            this.head = (this.head +1) % this.capacity  //Move pointer to next element behind 
 
-            //Move element behind up a position in the queue 
-            this.head = (this.head+1) % this.capacity  //5%5 = points back to index[0]
-    
-           this.currentLength-- //Free up space in circular queue
+            this.currentLength--  //Decrease the length
         }
-   
 
+        //Reset Queue if empty
+        if(this.isEmpty()){
+            this.head = -1
+            this.tail = -1
+        }
+
+        return this.circularQueueItems
     }
 
     Peek(){
         return console.log(this.circularQueueItems[this.head])
-    }
+    }       
     isFull(){ //Check if queue is full
         return console.log((this.currentLength === this.capacity)) //Return true if truthy
     }
@@ -61,17 +70,23 @@ class CircularQueue{
     }
 
     Print(){ //Reprint the elements after adding a new element to the back of the queue
-
+    
         if(this.isEmpty()){
-            console.log("Queue is empty")
+            console.log("There is no element in the queue")
         }else{
-            let result = "";
+
             let i;
-            for(i =this.head; i!= this.tail; i=(i+1)%this.capacity){ //Loops through the Circular Queue
-               result += this.circularQueueItems[i]  + " , "  // Dave, Ed ..
+            let result = ''; //Create a string to hold the resulting new array
+
+            //Loops through all elements in queue while head index != tail index, with a base/edge case of a remainder of the capacity
+            for(i=this.head; i!=this.tail; i=((i+1)% this.capacity) ){
+                result += this.circularQueueItems[i] + ","  //result = { firstElement, secondElement, .....    }
             }
-           console.log(result)
+            //Since the loop stops when head = tail, the last element in the queue is not included so, add that the result at the end of queue
+            result += this.circularQueueItems[i] 
+            console.log(result)
         }
+
 
     }
 
@@ -87,12 +102,11 @@ CircularQueue1.enQueue("Dave") //1st to enter
 CircularQueue1.enQueue("ED")
 CircularQueue1.enQueue("Hak")
 CircularQueue1.enQueue("Jane")
-CircularQueue1.enQueue("Maria")
 
 CircularQueue1.Print()
 CircularQueue1.isFull()
 CircularQueue1.Size()
-//////////////////////////////////////////
+// //////////////////////////////////////////
 
 CircularQueue1.deQueue()
 CircularQueue1.Print()
@@ -102,6 +116,9 @@ CircularQueue1.Peek()
 
 //////////////////////////////////////////
 CircularQueue1.enQueue("Bane")
+CircularQueue1.enQueue("Bruce")
 CircularQueue1.Print()
-
+CircularQueue1.isFull()
+CircularQueue1.Size()
+CircularQueue1.Peek()
 
