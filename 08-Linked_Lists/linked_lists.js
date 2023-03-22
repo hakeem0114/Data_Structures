@@ -38,6 +38,7 @@ class LinkedList{
     }
 
     append(value){ //Adding new node to TAIL of LL
+
         const node = new Node(value) // Create a new node with value & next pointer to null
 
         if(this.isEmpty()){ //If LL, add node to head if LL is empty
@@ -45,6 +46,7 @@ class LinkedList{
         }else{ 
 
             //If LL is not empty, add node to the tail
+
             let previous = this.head //Pointer to hold the previous node
 
             while(previous.next){ //while previous.next !=null (last node)
@@ -53,11 +55,43 @@ class LinkedList{
                 previous = previous.next //Move pointer to next node
             }
                 //Once the previous pointer reaches the last node where previous pointer points to null
-                previous.next = node //Point the previous node's pointer to the new node
+                previous.next = node //Point the last node's pointer to the new node to add it to the LL
             }
 
         
         this.size++ //Increment size of LL to keep track
+
+    }
+
+    insert(value, index){
+
+        //Edge Case 1: Invalid Index => If index < 0 || index > this.size
+        if(index < 0 || index > this.size){
+            return console.log("Enter index # > 0 OR < size of LL")
+        }
+
+        //Edge Case 2: If index = 0, => prepend()
+        if(index === 0){
+            this.prepend(value)
+        }
+
+        //Edge Case 3: Index > 0 (Add node to middle of LL)
+        if(index > 0){
+            const node  = new Node(value) 
+
+            let previous = this.head //Creates a pointer to keep track of each node
+    
+            for (let i=0; i<index-1;i++){ //Loop through LL & stop at index before the entered index (index-1)
+                previous = previous.next //Move the pointer to the next index til the penultimate index
+            }
+            //Once the pointer is the at index before the entered index
+            
+            node.next = previous.next //Point new node's pointer to pointer of next node
+
+            previous.next = node//Point previous pointer to new node
+
+            this.size++ // Increment size after adding new node to middle
+        }
 
     }
 
@@ -90,7 +124,7 @@ console.log("LinkedList1 is empty?", LinkedList1.isEmpty()) //True or False as a
 
 LinkedList1.prepend(10)
 LinkedList1.prepend(20)
-LinkedList1.prepend(30)
+LinkedList1.prepend(30) 
 LinkedList1.print()
 LinkedList1.getSize()
 
@@ -106,5 +140,13 @@ LinkedList1.getSize()
 
 
 LinkedList1.append(68)
+LinkedList1.print()
+LinkedList1.getSize()
+
+LinkedList1.insert(11,0)
+LinkedList1.print()
+LinkedList1.getSize()
+
+LinkedList1.insert(180,6)
 LinkedList1.print()
 LinkedList1.getSize()
