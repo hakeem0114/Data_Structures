@@ -1,12 +1,11 @@
 class Node{
     constructor(value){
         this.value = value
-        this.previous = null
         this.next = null //Next pointer of 1st node is null (end of list)
     }
 }
 
-class DoublyLinkedList{
+class LinkedList{
     constructor(){
         this.head = null //LL is empty by default
         this.size = 0  //LL is empty by default
@@ -26,7 +25,6 @@ class DoublyLinkedList{
 
             //LL is not empty, put the new node in front of the exisiting node
                 node.next = this.head //Make the new node point to the exisiting node (currently the head of LL)
-                this.head.previous = node //Make the previous pointer of current head point to new node
                 this.head = node //Make the new node the head
         }
        
@@ -214,34 +212,34 @@ class DoublyLinkedList{
 
 }
 
-const DoublyLinkedList1 = new DoublyLinkedList()
+const LinkedList1 = new LinkedList()
 
-DoublyLinkedList1.insertFirstNode(100)
-DoublyLinkedList1.insertFirstNode(500)
-DoublyLinkedList1.insertFirstNode(300)
-DoublyLinkedList1.print()
-DoublyLinkedList1.getSize()
+LinkedList1.insertFirstNode(100)
+LinkedList1.insertFirstNode(500)
+LinkedList1.insertFirstNode(300)
+LinkedList1.print()
+LinkedList1.getSize()
 
-DoublyLinkedList1.insertLastNode(-250)
-DoublyLinkedList1.print()
-DoublyLinkedList1.getSize()
+LinkedList1.insertLastNode(-250)
+LinkedList1.print()
+LinkedList1.getSize()
 
-DoublyLinkedList1.insertAtIndex(-155, 3)
-DoublyLinkedList1.print()
-DoublyLinkedList1.getSize()
+LinkedList1.insertAtIndex(-155, 3)
+LinkedList1.print()
+LinkedList1.getSize()
 
-DoublyLinkedList1.getValueAtIndex(3)
+LinkedList1.getValueAtIndex(3)
 
-DoublyLinkedList1.removeAtIndex(3)
-DoublyLinkedList1.print()
-DoublyLinkedList1.getSize()
+LinkedList1.removeAtIndex(3)
+LinkedList1.print()
+LinkedList1.getSize()
 
-DoublyLinkedList1.reverseLL()
-DoublyLinkedList1.print()
+LinkedList1.reverseLL()
+LinkedList1.print()
 
 
-// DoublyLinkedList1.clear()
-// DoublyLinkedList1.print()
-// DoublyLinkedList1.getSize()
+// LinkedList1.clear()
+// LinkedList1.print()
+// LinkedList1.getSize()
 
 

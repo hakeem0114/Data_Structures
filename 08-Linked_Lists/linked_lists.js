@@ -1,9 +1,11 @@
 console.log("Linked Lists ")
 
-class Node{ //Value & pointer to next node
+class Node{ //Contains Value & pointer to next node
     constructor(value){
-        this.value = value
-        this.next = null
+        this.value = value  
+
+        this.next = null  // .next() js method return a value & boolean once completed
+        //this.next in case, return the value of the current node & the pointer to the next node in the LL
     }
 }
 
@@ -95,6 +97,39 @@ class LinkedList{
 
     }
 
+    
+    remove(index){ //Remove a node
+
+        //Edge Case 1: Invalid Index => If index < 0 || index > this.size
+        if(index < 0 || index > this.size){
+            return console.log("Enter # an index that is within the LL")
+        }
+
+         //Edge Case 2: If index = 0, => prepend()
+
+            let removedNode //Keep track of & return node
+            if (index === 0){
+                removedNode = this.head //Store the 1st head node in removedNode variable
+                this.head = this.head.next // Move head node to the 2nd node, making it the new head
+            }
+            
+            
+
+            //Edge Case 3: If index > 0
+            let previous = this.head;
+            if(index > 0){
+                for(let i=0; i< index-1;i++ ){ // Travel to the node just before your indexed node
+                    previous = previous.next
+                }
+                removedNode = previous.next //Store the actual node you want to remove in the "removeNode" variable
+                previous.next = removedNode.next //Link previous node to actual indexed Node to the node after the indexed node
+           }
+
+           
+            this.size--
+            return removedNode
+    }
+
     print(){
         //If LL is empty
         if(this.isEmpty()){
@@ -148,5 +183,9 @@ LinkedList1.print()
 LinkedList1.getSize()
 
 LinkedList1.insert(180,6)
+LinkedList1.print()
+LinkedList1.getSize()
+
+LinkedList1.remove(2)
 LinkedList1.print()
 LinkedList1.getSize()
