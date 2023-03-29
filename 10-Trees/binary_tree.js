@@ -92,8 +92,10 @@ class BinarySearchTree{
         //Pre-Order DFS
             //Read node value -> Visit left subtree -> Visit right subtree
          preOrderDFS(root){ //Prints all values of node using pre-Order DFS
-                if(root){ //If node exists, 
-                    console.log(root.value) //Read node value
+                if(root){ //If node exists, preOrderDFS through three
+                    
+                    //Read node value
+                    console.log(root.value) 
 
                     //Recursively Visit left subtree to check value
                     this.preOrderDFS(root.left)
@@ -104,12 +106,100 @@ class BinarySearchTree{
             }
          
 
-        //In-Order DFS
+        //In-Order DFS: left subtree, read node then right
+        inOrderBFS(root){
+            if(root){ //If root exits, inOrderDFS through the tree
+                
+                //Visit left subtree recursively
+                this.inOrderBFS(root.left)
 
-        //Post-Order DFS
+                //Read node value
+                console.log(root.value)
+
+                //Visit right subtree
+                this.inOrderBFS(root.right)
+            }
+        }
+
+        //Post-Order DFS: left subtree, right subtree , read node
+        postOrderBFS(root){
+            if(root){ //If root exits, inOrderDFS through the tree
+                
+                //Visit left subtree recursively
+                this.postOrderBFS(root.left)
+
+                //Visit right subtree
+                this.postOrderBFS(root.right)
+
+                //Read node value
+                console.log(root.value)
+
+            }
+        }
+
+    //Breadth First Search (BFS): Traverse breadth first before next lower breadth
+    breadthFirstSearch(root){
+
+        //Redo with objects & pointers for O(1)
+        //Create a queue
+            const queueBFS = []
+
+        //Enqueue (insert at tail of queue) 
+            queueBFS.push(root)
+        
+        //While the node exists in the queue, visit all branches
+            while(queueBFS.length){ //while not empty
+
+                //Dequeue: remove node at head 
+                let currentNode = queueBFS.shift(root) //Remove node from queue into another placeholder
+
+                //Read the node's value
+                console.log(currentNode.value)
+
+                //Enqueue the node's left child if it exists: Check left breadth nodes of queued node
+                if(currentNode.left){
+                    //Enqueue if it exists
+                    queueBFS.push(currentNode.left)
+                }
+                if(currentNode.right){
+                    //Right Breadth
+                    queueBFS.push(currentNode.right)
+                }
+            }
+
+         
+
+
+    }
+
+    //Min node from a BST: Return leftmost leaf(node w/o children) node
+    minimumNode(root){
+        //Edge Case to exit recursion
+        if(!root.left){ //If the main root is a leaf node = null
+            return console.log(root.value)
+        }else{
+            //If root node has children on the left depth
+            
+            //Recursively traverse leftmost node until edge case is hit
+            // (unit you reach a leftmost leaf node)
+             this.minimumNode(root.left)
+        }
+    }
     
+    //Max node from a BST: Return rightmost leaf(node w/o children) node
+    maximumNode(root){
+        //Edge Case to exit recursion
+        if(!root.right){ //If the main root is a leaf node = null
+            return console.log(root.value)
+        }else{
+            //If root node has children on the left depth
+            
+            //Recursively traverse leftmost node until edge case is hit
+            // (unit you reach a leftmost leaf node)
+            this.minimumNode(root.right)
+        }
+    }
 
-    //Breadth First Search (BFS)
 
     //Deletion
 
@@ -138,10 +228,27 @@ console.log("Is the Binary Search Tree (BST) empty?", BinarySearchTree1.isEmpty(
     console.log(BinarySearchTree1.search(bstRoot,20))
     
 
-// //Breadth First Search(BFS) Traversal
+//Depth First Search(BFS) Traversal: Traverses through entire left/right depth & returns its value
 
-    //Pre-Order BFS: root, left side, backtrack to previous node, then right right
+    //Pre-Order DFS: root, left side, backtrack to previous node, then right right
     BinarySearchTree1.preOrderDFS(BinarySearchTree1.root)
+    console.log("*********************")
+    
+    //In-Order BFS: left subtree, read node then right
+    BinarySearchTree1.inOrderBFS(BinarySearchTree1.root)
 
-    //In-Order BFS: f
+    console.log("*********************")
+    //In-Order BFS: left subtree, read node then right
+    BinarySearchTree1.postOrderBFS(BinarySearchTree1.root)
 
+//Breadth First Search (DFS) Traversal: 
+    console.log("*********BFS***********")
+    BinarySearchTree1.breadthFirstSearch(bstRoot)
+
+//Minimum Node in BST: 
+    console.log("***Minimum Node****")
+    BinarySearchTree1.minimumNode(bstRoot)
+   
+//Maximum Node in BST: 
+    console.log("***Maximum Node****")
+    BinarySearchTree1.maximumNode(bstRoot)
