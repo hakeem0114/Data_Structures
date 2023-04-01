@@ -201,7 +201,57 @@ class BinarySearchTree{
     }
 
 
-    //Deletion
+    //Deletion: Delete node given value
+    delete(value){
+        
+        //Call function to delete node
+        this.root  = this.deleteNode(this.root, value)
+    }
+
+    //Recursive deleteNode
+    deleteNode(subtreeRoot, value){
+        if(subtreeRoot === null){ //If BST is empty, return 
+            return subtreeRoot //Return subtreeNode to ensure recursion works for root w/ child nodes
+        }else{
+            //BST is not empty
+            
+            //Find node that contains the passed in value.    
+            if(value < subtreeRoot.value){ //Traverse left 
+                subtreeRoot.left = this.deleteNode( subtreeRoot.left,value)
+            }else  if(value > subtreeRoot.value){//Right
+                subtreeRoot.right = this.deleteNode( subtreeRoot.right, value)
+            }else{
+
+                //We have found node whose value => passed in value
+                //At that node that contains the value, there are cases it will have
+                //lead, (1) node child, (2)node children
+
+                //Edge Case 1: If a leaf node
+                if(!subtreeRoot.left && !subtreeRoot.right){
+                    return null //Remove node from tree
+                }
+
+                //Edge Case 2: (1) Child node
+                    //Remove node & replace with its child
+
+                if(!subtreeRoot.left){ //If no left child, return right child to its original position
+                    return subtreeRoot.right
+                }else if(!subtreeRoot.right){
+                    return subtreeRoot.left
+                }
+
+                //Edge Case 3: (2) Children nodes
+                    //Copy value of in-order successor (Minimum value in its right subtree) 
+                    //to the node & delete the original in-order successor 
+                subtreeRoot.value = this.minimumNode(subtreeRoot.right) //In-order successor
+                subtreeRoot.right = this.deleteNode(subtreeRoot.right, subtreeRoot.value) //Recursion in case the child node has more children
+            }
+            return subtreeRoot
+
+        }
+    }
+
+
 
 
 }
@@ -225,7 +275,7 @@ console.log("Is the Binary Search Tree (BST) empty?", BinarySearchTree1.isEmpty(
     console.log(BinarySearchTree1.search(bstRoot,10))
     console.log(BinarySearchTree1.search(bstRoot,5))
     console.log(BinarySearchTree1.search(bstRoot,15))
-    console.log(BinarySearchTree1.search(bstRoot,20))
+    console.log(BinarySearchTree1.search(bstRoot,3))
     
 
 //Depth First Search(BFS) Traversal: Traverses through entire left/right depth & returns its value
@@ -252,3 +302,11 @@ console.log("Is the Binary Search Tree (BST) empty?", BinarySearchTree1.isEmpty(
 //Maximum Node in BST: 
     console.log("***Maximum Node****")
     BinarySearchTree1.maximumNode(bstRoot)
+
+//Delete node given value in BST: 
+    console.log("**Delete Node****")
+    BinarySearchTree1.breadthFirstSearch(bstRoot)
+    console.log("*******************")
+    BinarySearchTree1.delete(3)
+    BinarySearchTree1.breadthFirstSearch(bstRoot)
+
